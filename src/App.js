@@ -1,7 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import { fetchUser } from './hooks/fetchUser';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function App() {
+
+  const { loginWithRedirect } = useAuth0();
   return (
     <div className="App">
       <header className="App-header">
@@ -18,7 +23,11 @@ function App() {
           Learn React
         </a>
         <br/>
-      <button> fetch github </button>
+
+      {/* https://api.github.com/users/danielcw7/repos */}
+      <button onClick={fetchUser}> fetch user </button>
+      <button onClick={loginWithRedirect}> login </button>
+
       </header>
     </div>
   );
