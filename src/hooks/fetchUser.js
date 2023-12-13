@@ -14,7 +14,6 @@ export async function fetchUser(user) {
         console.error(err)
     } finally {
         console.log("done fetching")
-        console.log(process.env.REACT_APP_CLIENT_ID, process.env.REACT_APP_CLIENT_DOMAIN)
     }
 }
  

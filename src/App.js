@@ -6,7 +6,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {
 
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+  
+  function logging() {
+    console.log(user)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -27,6 +32,8 @@ function App() {
       {/* https://api.github.com/users/danielcw7/repos */}
       <button onClick={fetchUser}> fetch user </button>
       <button onClick={loginWithRedirect}> login </button>
+      <button onClick={logging}> log user </button>
+      { isAuthenticated && <div> logged in as {user.nickname} </div> }
 
       </header>
     </div>
