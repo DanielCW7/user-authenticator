@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.profilePic {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: solid rgb(226, 226, 226) 5px;
+}
