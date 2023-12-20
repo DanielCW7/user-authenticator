@@ -1,9 +1,9 @@
 import { Button, Container, Box } from '@mui/material';
-import '../App.css';
+import '../styles/App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { fetchUser } from '../hooks/fetchUser';
-import { fetchRepos } from '../hooks/fetchProjects';
+import { fetchProjects } from '../hooks/fetchProjects';
 import Repo from "../components/repo";
 
 function App() {
@@ -12,27 +12,34 @@ function App() {
   const [isRepos, setRepos] = useState("")
   const [userData, setUserData] = useState("")
   
-  const test = [
-    {"test1": "test"},
-    {"test1": "test"},    
-    {"test1": "test"},    
-    {"test1": "test"},    
-    {"test2": "test"}
-  ]
+  // const test = [
+  //   {"test1": "test"},
+  //   {"test1": "test"},    
+  //   {"test1": "test"},    
+  //   {"test1": "test"},    
+  //   {"test2": "test"}
+  // ]
 
-  useEffect(() => {
-    if(user) {
-        const data = fetchUser(user.nickname)
-        const repos = fetchRepos(user.nickname)
-        setRepos(test)
-        setUserData(test)
-    } else { return }
+    const populate = async () => {
+      // set loading state
+      try {
+
+        const data = await fetchProjects(user.nickname)
+        const repos = data.map(props => <Repo data={props} />)
+        setRepos(repos)
+      } catch(err) {
+        console.error(err)
+      } finally {
+        console.log("done")
+        // set loading false
+      }
+    }  
+    
+    useEffect(() => {
+    user && populate()
   }, [isAuthenticated])
 
-  const array = test.map(item => {
-    return <Repo />
-  })
-  
+
   return (
     <div className="App">
       <Box sx={{ background: 'gray'}}>
@@ -53,7 +60,7 @@ function App() {
             lg: "repeat(3, minmax(100px, 1fr))"
           }
         }}>
-            {isRepos ? array : <p>not awesome</p>}          
+            {isRepos ? isRepos : <p>not awesome</p>}          
 
         </Container>
 

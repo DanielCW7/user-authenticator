@@ -1,12 +1,13 @@
 
 
-export async function fetchRepos(user) {
+export async function fetchProjects(user) {
     
-    const baseUrl = `https://api.github.com/users/${user}/repos`
+    const baseUrl = `https://api.github.com/users/${user}/repos`;
+
     try {
-        // await fetch(baseUrl)
-        // .then(res => res.json())
-        // .then(data => console.log(data))
+        const data = await fetch(baseUrl)
+        const response = await data.json()
+        return response
     } catch(err) {
         console.error(err)
     } finally {

@@ -1,6 +1,10 @@
-import { Card, Box, Typography, CardContent, CardActions, Grid } from "@mui/material"
+import { Box, Typography, CardContent, CardActions, Card } from "@mui/material"
 
 const Repo = (data) => {
+
+    const {id, owner, language, forks, name, html_url } = data.data   
+
+    // github repo url = html_url
     return (
             <Box sx={{
                 borderRadius: "5px",
@@ -10,31 +14,30 @@ const Repo = (data) => {
 
                 <Typography 
                     variant="h6" 
-                    component="h6" 
-                    sx={{ padding: "15px 10px", background: "red", textAlign: "left"}}
-                >{/* name: {data?.name ?? "err"} */}Auth App</Typography>
+                    component="h6"
+                    sx={{ 
+                        padding: "15px 10px", 
+                        textAlign: "left",
+                        backgroundColor: "red"
+                    }}
+                > {name ?? "err"} </Typography>
                 
                 <Box sx={{display: "flex", padding: "15px 10px", gap: "20px"}}>
-                    <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column"}}>
-                        <Typography variant="body" component="p">Language</Typography>
-                        <Typography variant="body2" component="p">{data?.langauge ?? "0"}</Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column"}}>
-                        <Typography variant="body" component="p">Forks</Typography>
-                        <Typography variant="body2" component="p">{data?.forks ?? "0"}</Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column"}}>
+                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px", background: ""}}>
                         <Typography variant="body" component="p">Owner</Typography>
-                        <Typography variant="body2" component="p">{data?.owner ?? "danielCW7"}</Typography>
-                    </Box>                   
+                        <Typography variant="body" component="p">{owner?.login ?? "danielCW7"}</Typography>
+                    </Box>                    
+                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px"}}>
+                        <Typography variant="body" component="p">Language</Typography>
+                        <Typography variant="body" component="p">{language ?? "none"}</Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px"}}>
+                        <Typography variant="body" component="p">Forks</Typography>
+                        <Typography variant="body" component="p">{forks ?? "0"}</Typography>
+                    </Box>
+                   
                 </Box>
-                    {/* card actions dropdown for project description? */}
-                    {/* links to demo and code */}
-                    {/*              
-                        <p>language: {data?.langauge ?? "err"}</p>
-                        <p>forks: {data?.forks ?? "err"}</p>
-                        <p>login: {data?.owner?.login ?? "err"}</p> */
-                    }                    
+                    {/* card actions dropdown for project description? */}                  
             </Box>
 
 

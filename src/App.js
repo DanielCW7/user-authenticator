@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {

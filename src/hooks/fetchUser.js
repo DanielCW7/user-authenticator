@@ -6,8 +6,8 @@
 export async function fetchUser(user) {
     const baseUrl = `https://api.github.com/users/${user}`
 
-    // try { await fetch(baseUrl) } 
-    // catch(err) { console.error(err) } 
-    // finally { console.log("done fetching") }
+    try { await fetch(baseUrl) } 
+    catch(err) { console.error(err) } 
+    finally { console.log("done fetching") }
 }
  
