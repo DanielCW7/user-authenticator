@@ -5,6 +5,7 @@ const Repo = (data) => {
     const {id, owner, language, forks, name, html_url } = data.data   
 
     // github repo url = html_url
+    
     return (
             <Box sx={{
                 borderRadius: "5px",
@@ -18,24 +19,20 @@ const Repo = (data) => {
                     sx={{ 
                         padding: "15px 10px", 
                         textAlign: "left",
-                        backgroundColor: "#f7f7f7"
+                        color: "green"
                     }}
                 > {name ?? "err"} </Typography>
                 
-                <Box sx={{display: "flex", padding: "15px 10px", gap: "20px"}}>
-                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px", background: ""}}>
-                        <Typography variant="body" component="p">Owner</Typography>
-                        <Typography variant="body" component="p">{owner?.login ?? "danielCW7"}</Typography>
+                <Box sx={{display: "flex", flexDirection: "column", padding: "15px 10px", gap: "0px"}}>
+                    <Box sx={{ display: "flex", textAlign: "left", gap: "20px"}}>
+                        <Typography variant="body" component="li">Owner __ {owner?.login ?? "danielCW7"}</Typography>
                     </Box>                    
-                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px"}}>
-                        <Typography variant="body" component="p">Language</Typography>
-                        <Typography variant="body" component="p">{language ?? "none"}</Typography>
+                    <Box sx={{ display: "flex", textAlign: "left", gap: "20px"}}>
+                        <Typography variant="body" component="li">Language __ {language ?? "none"}</Typography>
                     </Box>
-                    <Box sx={{ display: "flex", justifyContent: "center", alignSelf: "center", gap: "10px"}}>
-                        <Typography variant="body" component="p">Forks</Typography>
-                        <Typography variant="body" component="p">{forks ?? "0"}</Typography>
+                    <Box sx={{ display: "flex", textAlign: "left", gap: "20px"}}>
+                        <Typography variant="body" component="li">Forks __ {forks ?? "0"}</Typography>
                     </Box>
-                   
                 </Box>
                     {/* card actions dropdown for project description? */}                  
             </Box>
