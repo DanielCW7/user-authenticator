@@ -8,7 +8,7 @@ const Repo = (data) => {
     return (
             <Box sx={{
                 borderRadius: "5px",
-                background: "#efefef",
+                background: "#fff",
                 overflow: "hidden"
             }}>
 
@@ -18,7 +18,7 @@ const Repo = (data) => {
                     sx={{ 
                         padding: "15px 10px", 
                         textAlign: "left",
-                        backgroundColor: "red"
+                        backgroundColor: "#f7f7f7"
                     }}
                 > {name ?? "err"} </Typography>
                 

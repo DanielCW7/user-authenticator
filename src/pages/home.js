@@ -12,20 +12,20 @@ function App() {
   const [isRepos, setRepos] = useState("")
   const [userData, setUserData] = useState("")
   
-  // const test = [
-  //   {"test1": "test"},
-  //   {"test1": "test"},    
-  //   {"test1": "test"},    
-  //   {"test1": "test"},    
-  //   {"test2": "test"}
-  // ]
+  const test = [
+    {"test1": "test"},
+    {"test1": "test"},    
+    {"test1": "test"},    
+    {"test1": "test"},    
+    {"test2": "test"}
+  ]
 
     const populate = async () => {
       // set loading state
       try {
 
-        const data = await fetchProjects(user.nickname)
-        const repos = data.map(props => <Repo data={props} />)
+        // const data = await fetchProjects(user.nickname)
+        const repos = test.map(props => <Repo data={props} />)
         setRepos(repos)
       } catch(err) {
         console.error(err)
@@ -45,11 +45,11 @@ function App() {
       <Box sx={{ background: 'gray'}}>
         <Container sx={{ padding: "50px 0px"}}>
             <img src={user?.picture ?? null} className="profilePic" />
-            <h1> homepage hero </h1>
-            <h2> Welcome, {user?.name ?? "guest"}! </h2>
+            <h1> Welcome, {user?.name ?? "guest"}! </h1>
         </Container>        
       </Box>
 
+      <Box sx={{ backgroundColor: "#e6e6e6"}}>
         <Container sx={{
           display: "grid",
           gridGap: "20px",
@@ -62,7 +62,9 @@ function App() {
         }}>
             {isRepos ? isRepos : <p>not awesome</p>}          
 
-        </Container>
+        </Container>        
+      </Box>
+
 
     </div>
   );
