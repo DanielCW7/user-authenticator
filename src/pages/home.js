@@ -11,39 +11,46 @@ import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 function App() {
 
   const { user, isAuthenticated, } = useAuth0();
-  const [isRepos, setRepos] = useState("")
+  const [isRepos, setRepos] = useState([])
   const [userData, setUserData] = useState("")
-  
-  const test = [
-    {"test1": "test"},
-    {"test1": "test"},    
-    {"test1": "test"},    
-    {"test1": "test"},    
-    {"test2": "test"}
+
+  const columns = [
+    {field: "Project", headerName: "Project", width: 150},
+    {field: "Owner", headerName: "Owner", width: 150},
+    {field: "Language", headerName: "Language", width: 150},
+    {field: "Forks", headerName: "Forks", width: 150},
+    {field: "Watchers", headerName: "Watchers", width: 150},
+    {field: "id", headerName: "Project ID", width: 150}
   ]
 
-  const rows: GridRowsProp = [
-    {id: 1, col1: "data", col2: "example"},
-    {id: 2, col1: "data", col2: "example"},
-    {id: 3, col1: "data", col2: "example"},
-    {id: 4, col1: "data", col2: "example"},
-  ]
-
-  const columns: GridColDef[] = [
-    {field: "col1", headerName: "Column 1", width: 150}
-  ]
+  const rows = isRepos || {}
+  console.log(isRepos, columns)
 
     const populate = async () => {
-      // set loading state
-      try {
 
-        // const data = await fetchProjects(user.nickname)
-        const repos = test.map(props => <Repo data={props} />)
-        setRepos(repos)
+      try {
+        const data = await fetchProjects(user.nickname)
+        console.log(data)  
+
+        const rows = [
+          // {id: 1, col1: "Auth App", col2: "DanielCW7", col3: "Javascript", col4: "0", col5: "1"},
+        ]
+
+        data.map(props => {
+          return rows.push({
+            "Project": props.name, 
+            "Owner": props.owner.login, 
+            "Language": props.language, 
+            "Forks": props.forks, 
+            "Watchers": props.watchers,
+            "id": props.id
+          })
+        })
+        setRepos(rows)
+        // setRepos(rows)
       } catch(err) {
         console.error(err)
       } finally {
-        console.log("done")
         // set loading false
       }
     }  
@@ -67,10 +74,11 @@ function App() {
 
       <Box sx={{ backgroundColor: "#e6e6e6"}}>
         <Container>
-          <DataGrid rows={rows} columns={columns}/>  
-        </Container>          <Container>
-            {isRepos ? isRepos : <p>not awesome</p>}          
-        </Container> 
+          {/* populate rows with project data */}
+          <DataGrid rows={rows} columns={columns} initialState={{
+            pagination: { paginationModel: { pageSize: 5 } }
+          }} pageSizeOptions={[5, 25, 50, 100]}/>
+        </Container>          
      
       </Box>
     </div>
