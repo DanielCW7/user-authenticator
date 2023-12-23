@@ -31,10 +31,20 @@ useEffect(() => {
 
     return (
         <main>
-            <h1> Test page </h1>
-            { isAuthenticated && <div> {user.nickname} is logged in </div>}
-            
             <Container>
+                <h1> Test page </h1>
+                { isAuthenticated && <div> {user.nickname} is logged in </div>}              
+            </Container>
+
+            <Container sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                    xs: "repeat(1, minmax(0, 1fr))",
+                    md: "repeat(2, minmax(0, 1fr))",
+                    lg: "repeat(3, minmax(0, 1fr))",
+                },
+                gap: "20px"
+            }}>
                 {isCharacters ? isCharacters : <p>err</p>}
             </Container>
         </main>
