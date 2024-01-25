@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Container, Box, Card, Typography } from '@mui/material';
+import { Container, Box, Card, Typography, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import fetchRM from '../hooks/fetchRM';
 import Character from '../components/character';
@@ -30,23 +30,27 @@ useEffect(() => {
 
 
     return (
-        <main>
-            <Container>
-                <h1> Test page </h1>
-                { isAuthenticated && <div> {user.nickname} is logged in </div>}              
-            </Container>
+        <main className="App">
+                
+                <div>
+                    <Container>
+                        <h1> Test page </h1>
+                        { isAuthenticated && <div> {user.nickname} is logged in </div>}              
+                    </Container>
 
-            <Container sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                    xs: "repeat(1, minmax(0, 1fr))",
-                    md: "repeat(2, minmax(0, 1fr))",
-                    lg: "repeat(3, minmax(0, 1fr))",
-                },
-                gap: "20px"
-            }}>
-                {isCharacters ? isCharacters : <p>err</p>}
-            </Container>
+                    
+                    <Container sx={{
+                        display: "grid",
+                        gridTemplateColumns: {
+                            xs: "repeat(1, minmax(0, 1fr))",
+                            md: "repeat(2, minmax(0, 1fr))",
+                            lg: "repeat(3, minmax(0, 1fr))",
+                        },
+                        gap: "20px"
+                    }}>
+                        {isCharacters ? isCharacters : null}
+                    </Container>                    
+                </div>
         </main>
     )
 }

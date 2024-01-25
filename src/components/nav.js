@@ -6,7 +6,7 @@ const Nav = () => {
     const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
 
     return (
-        <Box component="nav">
+        <Box component="nav" sx={{backgroundColor: "#efefef"}}>
             <Container sx={{ display: "flex", flexDirection: "row-reverse"}}>
                 <a href="/"><Button> Home </Button></a>
                 <a href="/test"><Button> Test </Button></a>

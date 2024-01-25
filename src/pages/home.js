@@ -6,13 +6,14 @@ import { fetchUser } from '../hooks/fetchUser';
 import { fetchProjects } from '../hooks/fetchProjects';
 import Repo from "../components/repo";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-
+import Loader from '../components/loader';
 
 function App() {
 
-  const { user, isAuthenticated, } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [isRepos, setRepos] = useState([])
   const [userData, setUserData] = useState("")
+  const [isLoading, setLoading] = useState(false)
 
   const columns = [
     {field: "Project", headerName: "Project", width: 150},
@@ -24,18 +25,13 @@ function App() {
   ]
 
   const rows = isRepos || {}
-  console.log(isRepos, columns)
-
-    const populate = async () => {
-
+  const populate = async () => {
+    setLoading(true)
+  
       try {
         const data = await fetchProjects(user.nickname)
-        console.log(data)  
 
-        const rows = [
-          // {id: 1, col1: "Auth App", col2: "DanielCW7", col3: "Javascript", col4: "0", col5: "1"},
-        ]
-
+        const rows = []
         data.map(props => {
           return rows.push({
             "Project": props.name, 
@@ -46,42 +42,54 @@ function App() {
             "id": props.id
           })
         })
+
         setRepos(rows)
-        // setRepos(rows)
       } catch(err) {
         console.error(err)
       } finally {
-        // set loading false
-      }
+        setLoading(false)
+      }        
+      
+      console.log("populating")
+      
     }  
     
     useEffect(() => {
-    user && populate()
-  }, [isAuthenticated])
+    populate()
+  }, [isAuthenticated, user])
 
 
   return (
-    <div className="App">
-      <Box sx={{ background: 'gray'}}>
-        <Container sx={{ padding: "50px 0px"}}>
-            <img src={user?.picture ?? null} className="profilePic" />
-            <h1> Welcome, {user?.name ?? "guest"}! </h1>
-            <sub> nickname: {user?.nickname ?? ""} </sub><br/>
-            <sub> email: {user?.email ?? ""} </sub>
-        </Container>        
-      </Box>
+    <main className="App">
+      {isLoading ? <Loader/> : null}
+      { 
+        isAuthenticated ? 
+          <>
+            <Box sx={{ background: 'gray'}}>
+              <Container sx={{ padding: "50px 0px"}}>
+                  <img src={user?.picture ?? null} className="profilePic" />
+                  <h1> Welcome, {user?.name ?? "guest"}! </h1>
+                  <sub> nickname: {user?.nickname ?? ""} </sub><br/>
+                  <sub> email: {user?.email ?? ""} </sub>
+              </Container>        
+            </Box>
 
-
-      <Box sx={{ backgroundColor: "#e6e6e6"}}>
-        <Container>
-          {/* populate rows with project data */}
-          <DataGrid rows={rows} columns={columns} initialState={{
-            pagination: { paginationModel: { pageSize: 5 } }
-          }} pageSizeOptions={[5, 25, 50, 100]}/>
-        </Container>          
-     
-      </Box>
-    </div>
+            <Box sx={{ backgroundColor: "#e6e6e6" }}>
+              <Container>
+                {/* populate rows with project data */}
+                <DataGrid rows={rows} columns={columns} initialState={{
+                  pagination: { paginationModel: { pageSize: 5 } }
+                }} pageSizeOptions={[5, 25, 50, 100]}/>
+              </Container>          
+            </Box> 
+          </> 
+           : 
+          <Box>
+            <h1> please Log in </h1>
+            <Button onClick={loginWithRedirect}> Login </Button>
+          </Box>
+      }
+    </main>
   );
 }
 
