@@ -1,8 +1,7 @@
-import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Box, Button } from "@mui/material";
 
 const Character = (props) => {
     const  {name, created, episode, id, type, species, status, gender, image} = props.props
-    console.log(props)
 
     return (
         <Card variant="outlined">
@@ -20,6 +19,8 @@ const Character = (props) => {
                     <Typography variant="body2" component="p"> status: {status} </Typography>
                     <Typography variant="body2" component="p"> gender: {gender} </Typography>                    
                 </Box>
+                {/* removes the character card */}
+                <Button variant="outlined"> Remove </Button>
                 
             </CardContent>
 

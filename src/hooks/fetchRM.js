@@ -5,27 +5,47 @@
 // new characters with each refresh
 // 826 total characters, pass a random set of character IDs to get the characters "/character/[1,2,3]""
 
-const randomIds = []
+const randomIds = [];
 
-function random() {
+function randomSet() {
     // create random numbers 9 times and insert into empty array
     for(let i = 0; i != 9; i++) {
         randomIds.push(Math.floor(Math.random() * 826))
     }
-}
+};
 
 
-random()
-const baseUrl = `https://rickandmortyapi.com/api/character/${randomIds}`
 
-export default async function fetchRM() {
+
+randomSet();
+
+const baseUrl = `https://rickandmortyapi.com/api/character/${randomIds}`;
+
+export async function fetchRM() {
     try {
         const res = await fetch(baseUrl);
-        const data = await res.json()
+        const data = await res.json();
         return data
     } catch(err) {
-        console.error(err)
-    } finally {
-        console.log("done fetching Rick and Morty characters")
+        console.error(err);
     }
-}
+};
+
+    
+
+
+export async function fetchOneRM() {
+    let randomSingleId = Math.floor(Math.random() * 826);   
+    const baseUrlSingle = `https://rickandmortyapi.com/api/character/${randomSingleId}`;
+
+    try {
+
+        const res = await fetch(baseUrlSingle);
+        const data = await res.json();
+        return data
+    } catch(err) {
+        console.error(err);
+    } finally {
+        console.log("done fetching Rick and Morty characters");
+    }
+};

@@ -12,16 +12,16 @@ function App() {
 
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [isRepos, setRepos] = useState([])
-  const [userData, setUserData] = useState("")
+  // const [userData, setUserData] = useState("")
   const [isLoading, setLoading] = useState(false)
 
   const columns = [
     {field: "Project", headerName: "Project", width: 150},
-    {field: "Owner", headerName: "Owner", width: 150},
-    {field: "Language", headerName: "Language", width: 150},
-    {field: "Forks", headerName: "Forks", width: 150},
-    {field: "Watchers", headerName: "Watchers", width: 150},
-    {field: "id", headerName: "Project ID", width: 150}
+    {field: "Owner", headerName: "Owner", width: 150, filterable: false},
+    {field: "Language", headerName: "Language", width: 150, filterable: false},
+    {field: "Forks", headerName: "Forks", width: 150, filterable: false},
+    {field: "Watchers", headerName: "Watchers", width: 150, filterable: false},
+    {field: "id", headerName: "Project ID", width: 150, filterable: false}
   ]
 
   const rows = isRepos || {}
@@ -48,10 +48,7 @@ function App() {
         console.error(err)
       } finally {
         setLoading(false)
-      }        
-      
-      console.log("populating")
-      
+      }              
     }  
     
     useEffect(() => {
@@ -84,9 +81,15 @@ function App() {
             </Box> 
           </> 
            : 
-          <Box>
+          <Box sx={{
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "center",
+            justifyContent: "center"
+          }}>
             <h1> please Log in </h1>
-            <Button onClick={loginWithRedirect}> Login </Button>
+            <Button onClick={loginWithRedirect} sx={{width: "max-content", margin: "0px auto"}}> Login </Button>
           </Box>
       }
     </main>

@@ -3,21 +3,20 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Nav = () => {
 
-    const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
+    const { user, logout } = useAuth0();
 
     return (
         <Box component="nav" sx={{backgroundColor: "#efefef"}}>
-            <Container sx={{ display: "flex", flexDirection: "row-reverse"}}>
-                <a href="/"><Button> Home </Button></a>
-                <a href="/test"><Button> Test </Button></a>
-                { 
-                    user 
-                    ? <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin}})}> logout </Button>                
-                    : <Button onClick={loginWithRedirect}> Login </Button>
-                }                
-            </Container>
-
-            
+                {
+                    user ?
+                    <Container sx={{ display: "flex", flexDirection: "row-reverse"}}>
+                        <a href="/"><Button> Home </Button></a>
+                        <a href="/test"><Button> Test </Button></a>
+                        
+                        <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin}})}> logout </Button>                
+                    </Container>
+                    : null
+                }
         </Box>
     )
 }

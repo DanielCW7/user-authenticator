@@ -44,13 +44,33 @@
 }
 
 .profilePic {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
   border-radius: 50%;
-  border: solid rgb(226, 226, 226) 5px;
 }
 
 .sunset-gradient {
   background: rgb(131,58,180);
   background: linear-gradient(150deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+}
+
+.spin {
+  height: 50px;
+  width: 50px;
+  animation: spin infinite forwards 1s linear;
+  margin: auto;
+}
+
+.spin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffffb7;
+  backdrop-filter: blur(5px);
+  z-index: 5;
 }

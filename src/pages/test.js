@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Container, Box, Card, Typography, Button } from '@mui/material';
+import { Container, Box, Card, Typography, Button, CardContent } from '@mui/material';
 import { useEffect, useState } from 'react';
-import fetchRM from '../hooks/fetchRM';
+import { fetchRM, fetchOneRM }  from '../hooks/fetchRM';
 import Character from '../components/character';
 
 const Test = () => {
@@ -12,18 +12,24 @@ const [isCharacters, setCharacters] = useState("");
 const populate = async () => {
     try {
         const data = await fetchRM()
-        console.log("data is: ", data)
         const formatted = data.map(character => <Character props={character} />)
-
         setCharacters(formatted)
     } catch(err) {
         console.error(err)
-    } finally {
-        console.log(isCharacters)
-    }    
+    }   
 }
 
+const addCharacter = async () => {
+    try {
+        const data = await fetchOneRM();
+        const newCharacter = <Character props={data} />;
 
+        setCharacters(prevList => [...prevList, newCharacter])
+        // append returned character to the DOM from here
+    } catch(err) {
+        console.error("error adding a character", err)
+    }
+}
 useEffect(() => {
     populate()
 }, [])
@@ -39,7 +45,7 @@ useEffect(() => {
                     </Container>
 
                     
-                    <Container sx={{
+                    <Container id="characterGrid" sx={{
                         display: "grid",
                         gridTemplateColumns: {
                             xs: "repeat(1, minmax(0, 1fr))",
@@ -49,7 +55,12 @@ useEffect(() => {
                         gap: "20px"
                     }}>
                         {isCharacters ? isCharacters : null}
-                    </Container>                    
+                    </Container> 
+                    <Card>
+                        <CardContent>
+                            <Button onClick={addCharacter}> Add Character</Button>
+                        </CardContent>
+                    </Card>                  
                 </div>
         </main>
     )
