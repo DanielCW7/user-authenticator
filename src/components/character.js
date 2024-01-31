@@ -4,7 +4,7 @@ const Character = (props) => {
     const  {name, created, episode, id, type, species, status, gender, image} = props.props
 
     return (
-        <Card variant="outlined">
+        <Card variant="outlined" id={id}>
             <CardContent>
                 <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center"}}>
                     <CardMedia component="img" image={image} sx={{ objectFit: "cover", width: "150px", borderRadius: "50%", margin: "0px auto"}} />
@@ -20,7 +20,7 @@ const Character = (props) => {
                     <Typography variant="body2" component="p"> gender: {gender} </Typography>                    
                 </Box>
                 {/* removes the character card */}
-                <Button variant="outlined"> Remove </Button>
+                <Button variant="outlined" onClick={() => console.log("remove function")}> Remove </Button>
                 
             </CardContent>
 
