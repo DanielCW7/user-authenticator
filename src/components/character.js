@@ -20,7 +20,10 @@ const Character = (props) => {
                     <Typography variant="body2" component="p"> gender: {gender} </Typography>                    
                 </Box>
                 {/* removes the character card */}
-                <Button variant="outlined" onClick={() => console.log(name)}> Remove </Button>
+                <Button variant="outlined" onClick={() => {
+                    const card = document.getElementById(id)
+                    card.remove()
+                }}> Remove </Button>
                 
             </CardContent>
 
