@@ -45,7 +45,5 @@ export async function fetchOneRM() {
         return data
     } catch(err) {
         console.error(err);
-    } finally {
-        console.log("done fetching Rick and Morty characters");
     }
 };

@@ -10,7 +10,5 @@ export async function fetchProjects(user) {
         return response
     } catch(err) {
         console.error(err)
-    } finally {
-        console.log("done fetching repos")
     }
 }
