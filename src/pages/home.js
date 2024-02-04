@@ -17,10 +17,8 @@ function App() {
 
   const columns = [
     {field: "Project", headerName: "Project", width: 150},
-    {field: "Owner", headerName: "Owner", width: 150, filterable: false},
     {field: "Language", headerName: "Language", width: 150, filterable: false},
     {field: "Forks", headerName: "Forks", width: 150, filterable: false},
-    {field: "Watchers", headerName: "Watchers", width: 150, filterable: false},
     {field: "id", headerName: "Project ID", width: 150, filterable: false}
   ]
 
@@ -35,10 +33,8 @@ function App() {
         data.map(props => {
           return rows.push({
             "Project": props.name, 
-            "Owner": props.owner.login, 
             "Language": props.language, 
             "Forks": props.forks, 
-            "Watchers": props.watchers,
             "id": props.id
           })
         })
