@@ -4,6 +4,7 @@
 
 // new characters with each refresh
 // 826 total characters, pass a random set of character IDs to get the characters "/character/[1,2,3]""
+import axios from "axios";
 
 const randomIds = [];
 
@@ -14,18 +15,14 @@ function randomSet() {
     }
 };
 
-
-
-
 randomSet();
 
 const baseUrl = `https://rickandmortyapi.com/api/character/${randomIds}`;
 
 export async function fetchRM() {
     try {
-        const res = await fetch(baseUrl);
-        const data = await res.json();
-        return data
+        const response = await axios.get(baseUrl);
+        return response.data
     } catch(err) {
         console.error(err);
     }
@@ -39,10 +36,8 @@ export async function fetchOneRM() {
     const baseUrlSingle = `https://rickandmortyapi.com/api/character/${randomSingleId}`;
 
     try {
-
-        const res = await fetch(baseUrlSingle);
-        const data = await res.json();
-        return data
+        const response = await axios.get(baseUrlSingle);
+        return response.data
     } catch(err) {
         console.error(err);
     }
