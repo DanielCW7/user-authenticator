@@ -1,4 +1,4 @@
-import { Button, Container, Box } from '@mui/material';
+import { Button, Container, Box, TextField } from '@mui/material';
 import '../styles/App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
@@ -51,6 +51,20 @@ function App() {
     populate()
   }, [isAuthenticated, user])
 
+  const filter = (prop, repos) => {
+    let matches = [];
+    const search = prop.target.value;
+
+    const result = repos.map(i => {
+      // console.log(i.Project)
+      return i.Project.includes(search) ? i : null
+    });
+    console.log(result)
+    // receives an array of the entire set of repos and logs with every change
+    // run a conditional for the array passed to update the state to only have repos containing the matching condition
+    // .contains()
+  }
+
 
   return (
     <main className="App">
@@ -68,11 +82,14 @@ function App() {
             </Box>
 
             <Box sx={{ backgroundColor: "#e6e6e6" }}>
+
               <Container>
                 {/* populate rows with project data */}
+                <TextField id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
+
                 <DataGrid rows={rows} columns={columns} initialState={{
                   pagination: { paginationModel: { pageSize: 5 } }
-                }} pageSizeOptions={[5, 25, 50, 100]}/>
+                }} pageSizeOptions={[5, 25, 50, 100]} />
               </Container>          
             </Box> 
           </> 
