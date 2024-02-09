@@ -16,10 +16,10 @@ function App() {
   const [isLoading, setLoading] = useState(false)
 
   const columns = [
-    {field: "Project", headerName: "Project", width: 150},
-    {field: "Language", headerName: "Language", width: 150, filterable: false},
-    {field: "Forks", headerName: "Forks", width: 150, filterable: false},
-    {field: "id", headerName: "Project ID", width: 150, filterable: false}
+    {field: "Project", headerName: "Project", width: 150, sortable: false},
+    {field: "Language", headerName: "Language", width: 150, sortable: false},
+    {field: "Forks", headerName: "Forks", width: 150, sortable: false},
+    {field: "id", headerName: "Project ID", width: 150, sortable: false}
   ]
 
   const rows = filteredList || {}
@@ -40,7 +40,7 @@ function App() {
         })
 
         setRepos(rows)
-        setFilter(isRepos)
+        setFilter(rows)
       } catch(err) {
         console.error(err)
       } finally {
@@ -82,7 +82,7 @@ function App() {
                 {/* populate rows with project data */}
                 <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
 
-                <DataGrid rows={rows} columns={columns} initialState={{
+                <DataGrid disableColumnMenu rows={rows} columns={columns} initialState={{
                   pagination: { paginationModel: { pageSize: 5 } }
                 }} pageSizeOptions={[5, 25, 50, 100]} />
               </Container>          
