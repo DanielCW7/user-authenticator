@@ -2,9 +2,7 @@ import { Button, Container, Box, TextField } from '@mui/material';
 import '../styles/App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
-import { fetchUser } from '../hooks/fetchUser';
 import { fetchProjects } from '../hooks/fetchProjects';
-import Repo from "../components/repo";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import Loader from '../components/loader';
 
@@ -27,37 +25,34 @@ function App() {
     setLoading(true)
   
       try {
-        const data = await fetchProjects(user.nickname)
-
-        const rows = []
+        const data = await fetchProjects(user.nickname);
+        const rows = [];
         data.map(props => {
           return rows.push({
             "Project": props.name, 
             "Language": props.language, 
             "Forks": props.forks, 
             "id": props.id
-          })
-        })
+          });
+        });
 
-        setRepos(rows)
-        setFilter(rows)
+        setRepos(rows);
+        setFilter(rows);
       } catch(err) {
-        console.error(err)
+        console.error(err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }              
   }  
     
   useEffect(() => {
-    populate()
-  }, [isAuthenticated, user])
+    populate();
+  }, [isAuthenticated, user]);
 
   const filter = (prop, repos) => {
     const search = prop.target.value.toLowerCase();
-
     const result = repos.filter(project => project.Project.toLowerCase().includes(search));
-
-    setFilter(result)
+    setFilter(result);
   }
 
 
