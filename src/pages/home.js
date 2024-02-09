@@ -12,7 +12,7 @@ function App() {
 
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [isRepos, setRepos] = useState([])
-  // const [userData, setUserData] = useState("")
+  const [filteredList, setFilter] = useState([])
   const [isLoading, setLoading] = useState(false)
 
   const columns = [
@@ -22,7 +22,7 @@ function App() {
     {field: "id", headerName: "Project ID", width: 150, filterable: false}
   ]
 
-  const rows = isRepos || {}
+  const rows = filteredList || {}
   const populate = async () => {
     setLoading(true)
   
@@ -40,29 +40,24 @@ function App() {
         })
 
         setRepos(rows)
+        setFilter(isRepos)
       } catch(err) {
         console.error(err)
       } finally {
         setLoading(false)
       }              
-    }  
+  }  
     
-    useEffect(() => {
+  useEffect(() => {
     populate()
   }, [isAuthenticated, user])
 
   const filter = (prop, repos) => {
-    let matches = [];
-    const search = prop.target.value;
+    const search = prop.target.value.toLowerCase();
 
-    const result = repos.map(i => {
-      // console.log(i.Project)
-      return i.Project.includes(search) ? i : null
-    });
-    console.log(result)
-    // receives an array of the entire set of repos and logs with every change
-    // run a conditional for the array passed to update the state to only have repos containing the matching condition
-    // .contains()
+    const result = repos.filter(project => project.Project.toLowerCase().includes(search));
+
+    setFilter(result)
   }
 
 
@@ -83,9 +78,9 @@ function App() {
 
             <Box sx={{ backgroundColor: "#e6e6e6" }}>
 
-              <Container>
+              <Container sx={{ padding: 2 }}>
                 {/* populate rows with project data */}
-                <TextField id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
+                <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
 
                 <DataGrid rows={rows} columns={columns} initialState={{
                   pagination: { paginationModel: { pageSize: 5 } }
