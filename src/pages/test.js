@@ -43,8 +43,6 @@ useEffect(() => {
                         <h1> Test page </h1>
                         { isAuthenticated && <div> {user.nickname} is logged in </div>}              
                     </Container>
-
-                    
                     <Container id="characterGrid" sx={{
                         display: "grid",
                         gridTemplateColumns: {

@@ -12,6 +12,7 @@ function App() {
   const [isRepos, setRepos] = useState([])
   const [filteredList, setFilter] = useState([])
   const [isLoading, setLoading] = useState(false)
+  const [pageSize, setPageSize] = useState(5);
 
   const columns = [
     {field: "Project", headerName: "Project", width: 150, sortable: false},
@@ -42,6 +43,7 @@ function App() {
         console.error(err);
       } finally {
         setLoading(false);
+        console.log(isRepos)
       }              
   }  
     
@@ -58,6 +60,7 @@ function App() {
 
   return (
     <main className="App">
+
       {isLoading ? <Loader/> : null}
       { 
         isAuthenticated ? 
@@ -72,15 +75,32 @@ function App() {
             </Box>
 
             <Box sx={{ backgroundColor: "#e6e6e6" }}>
-
-              <Container sx={{ padding: 2 }}>
-                {/* populate rows with project data */}
-                <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
-
-                <DataGrid disableColumnMenu rows={rows} columns={columns} initialState={{
-                  pagination: { paginationModel: { pageSize: 5 } }
-                }} pageSizeOptions={[5, 25, 50, 100]} />
-              </Container>          
+            <Container sx={{paddingTop: '20px'}}>
+              <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
+              <table>
+                <thead>
+                  <tr>
+                    <td> Project </td>
+                    <td> Language </td>
+                    <td> Id </td>
+                  </tr>
+                </thead>
+                  {
+                    filteredList && filteredList.slice(0, pageSize).map(repo => {
+                      return (
+                        <tr key={repo.id}>
+                          <td>{repo.Project}</td>
+                          <td>{repo.Language}</td>
+                          <td>{repo.id}</td>
+                        </tr>
+                      )
+                    })
+                  }
+              </table>
+              {/* button to show more projects */}
+              {pageSize < filteredList.length ? <button className='add-btn' onClick={() => setPageSize(pageSize + 5)}> more </button> : null}
+            </Container> 
+                     
             </Box> 
           </> 
            : 
@@ -95,6 +115,7 @@ function App() {
             <Button onClick={loginWithRedirect} sx={{width: "max-content", margin: "0px auto"}}> Login </Button>
           </Box>
       }
+        
     </main>
   );
 }
