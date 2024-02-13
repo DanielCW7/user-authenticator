@@ -58,7 +58,7 @@ useEffect(() => {
                     </Container> 
                     <Card>
                         <CardContent>
-                            <Button onClick={addCharacter}> Add Character</Button>
+                            <Button onClick={addCharacter}> Add Character </Button>
                         </CardContent>
                     </Card>                  
                 </div>
