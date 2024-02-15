@@ -28,13 +28,16 @@ function App() {
               "id": props.id
             });
           });
-
+          
           setRepos(rows);
           setFilter(rows);
         } catch(err) {
           console.error(err);
         } finally {
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false)
+          }, 2000)
+          // setLoading(false);
         }              
     }
     console.log(user)
@@ -47,12 +50,11 @@ function App() {
     setFilter(result);
   }
 
-
   return (
     <main className="App">
 
-      {isLoading ? <Loader/> : null}
-      {/* instead of 'null' return the result of the page. authenticated or log in */}
+      {isLoading && <Loader/>}
+      
       { 
         isAuthenticated ? 
           <>
