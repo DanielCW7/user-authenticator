@@ -3,7 +3,6 @@ import '../styles/App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { fetchProjects } from '../hooks/fetchProjects';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import Loader from '../components/loader';
 
 function App() {
@@ -13,41 +12,32 @@ function App() {
   const [filteredList, setFilter] = useState([])
   const [isLoading, setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(5);
-
-  const columns = [
-    {field: "Project", headerName: "Project", width: 150, sortable: false},
-    {field: "Language", headerName: "Language", width: 150, sortable: false},
-    {field: "Forks", headerName: "Forks", width: 150, sortable: false},
-    {field: "id", headerName: "Project ID", width: 150, sortable: false}
-  ]
-
-  const rows = filteredList || {}
-  const populate = async () => {
-    setLoading(true)
-  
-      try {
-        const data = await fetchProjects(user.nickname);
-        const rows = [];
-        data.map(props => {
-          return rows.push({
-            "Project": props.name, 
-            "Language": props.language, 
-            "Forks": props.forks, 
-            "id": props.id
-          });
-        });
-
-        setRepos(rows);
-        setFilter(rows);
-      } catch(err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-        console.log(isRepos)
-      }              
-  }  
-    
+ 
   useEffect(() => {
+    const populate = async () => {
+      setLoading(true)
+    
+        try {
+          const data = await fetchProjects(user.nickname);
+          const rows = [];
+          data.map(props => {
+            return rows.push({
+              "Project": props.name, 
+              "Language": props.language, 
+              "Forks": props.forks, 
+              "id": props.id
+            });
+          });
+
+          setRepos(rows);
+          setFilter(rows);
+        } catch(err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }              
+    }
+    console.log(user)
     populate();
   }, [isAuthenticated, user]);
 
@@ -62,6 +52,7 @@ function App() {
     <main className="App">
 
       {isLoading ? <Loader/> : null}
+      {/* instead of 'null' return the result of the page. authenticated or log in */}
       { 
         isAuthenticated ? 
           <>
@@ -85,6 +76,7 @@ function App() {
                     <td> Id </td>
                   </tr>
                 </thead>
+                <tbody>
                   {
                     filteredList && filteredList.slice(0, pageSize).map(repo => {
                       return (
@@ -95,7 +87,9 @@ function App() {
                         </tr>
                       )
                     })
-                  }
+                  }                  
+                </tbody>
+
               </table>
               {/* button to show more projects */}
               {pageSize < filteredList.length ? <button className='add-btn' onClick={() => setPageSize(pageSize + 5)}> more </button> : null}
@@ -103,7 +97,7 @@ function App() {
                      
             </Box> 
           </> 
-           : 
+          : 
           <Box sx={{
             minHeight: "100vh",
             display: "flex",
