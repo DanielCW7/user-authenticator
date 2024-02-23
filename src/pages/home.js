@@ -7,16 +7,13 @@ import Loader from '../components/loader';
 
 function App() {
 
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
   const [isRepos, setRepos] = useState([])
   const [filteredList, setFilter] = useState([])
-  const [isLoading, setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(5);
  
   useEffect(() => {
-    const populate = async () => {
-      setLoading(true)
-    
+    const populate = async () => {    
         try {
           const data = await fetchProjects(user.nickname);
           const rows = [];
@@ -33,12 +30,7 @@ function App() {
           setFilter(rows);
         } catch(err) {
           console.error(err);
-        } finally {
-          setTimeout(() => {
-            setLoading(false)
-          }, 2000)
-          // setLoading(false);
-        }              
+        }             
     }
     console.log(user)
     populate();
@@ -68,35 +60,34 @@ function App() {
             </Box>
 
             <Box sx={{ backgroundColor: "#e6e6e6" }}>
-            <Container sx={{paddingTop: '20px'}}>
-              <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
-              <table>
-                <thead>
-                  <tr>
-                    <td> Project </td>
-                    <td> Language </td>
-                    <td> Id </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    filteredList && filteredList.slice(0, pageSize).map(repo => {
-                      return (
-                        <tr key={repo.id}>
-                          <td>{repo.Project}</td>
-                          <td>{repo.Language}</td>
-                          <td>{repo.id}</td>
-                        </tr>
-                      )
-                    })
-                  }                  
-                </tbody>
+              <Container sx={{paddingTop: '20px'}}>
+                <TextField fullWidth id="outlined-basic" label="Search Project" variant="outlined" onChange={(prop) => filter(prop, isRepos)} />
+                <table>
+                  <thead>
+                    <tr>
+                      <td> Project </td>
+                      <td> Language </td>
+                      <td> Id </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      filteredList && filteredList.slice(0, pageSize).map(repo => {
+                        return (
+                          <tr key={repo.id}>
+                            <td>{repo.Project}</td>
+                            <td>{repo.Language}</td>
+                            <td>{repo.id}</td>
+                          </tr>
+                        )
+                      })
+                    }                  
+                  </tbody>
 
-              </table>
-              {/* button to show more projects */}
-              {pageSize < filteredList.length ? <button className='add-btn' onClick={() => setPageSize(pageSize + 5)}> more </button> : null}
-            </Container> 
-                     
+                </table>
+                {/* button to show more projects */}
+                {pageSize < filteredList.length ? <button className='add-btn' onClick={() => setPageSize(pageSize + 5)}> more </button> : null}
+              </Container>    
             </Box> 
           </> 
           : 
