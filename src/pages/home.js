@@ -98,8 +98,8 @@ function App() {
             textAlign: "center",
             justifyContent: "center"
           }}>
-            <h1> please Log in </h1>
-            <Button onClick={loginWithRedirect} sx={{width: "max-content", margin: "0px auto"}}> Login </Button>
+            <h1> Please log in to view projects </h1>
+            <Button variant='outlined' onClick={loginWithRedirect} sx={{width: "max-content", margin: "0px auto"}}> Login </Button>
           </Box>
       }
         
